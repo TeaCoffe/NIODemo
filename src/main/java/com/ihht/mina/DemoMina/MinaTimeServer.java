@@ -20,11 +20,14 @@ public class MinaTimeServer {
 		acceptor.getFilterChain().addLast("logger", new LoggingFilter());
 		acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
 		
-		acceptor.setHandler(new TimeServer());
 		
 		acceptor.getSessionConfig().setReadBufferSize(2048);
+		//读写通道10秒内无操作进入空闲状态
 		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
 		
+		acceptor.getSessionConfig().setWriteTimeout(20);
+		
+		acceptor.setHandler(new TimeServer());
 		try {
 			acceptor.bind(new InetSocketAddress(port));
 		} catch (IOException e) {

@@ -25,7 +25,9 @@ public class TimeServer extends IoHandlerAdapter {
               Calendar time = Calendar.getInstance();  
               SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
               session.write(df.format(time.getTime()));  
-              System.out.println("TimeMessage written...");  
+              System.out.println("TimeMessage written..."); 
+              //是否关闭连接，是= 短连接 否 = 长连接
+              session.close();
     }  
 
     @Override  
